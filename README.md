@@ -4,8 +4,8 @@ Utility scripts for downloading LeetCode problem statements and scaffolding lang
 
 ## TODO:
 
--         [x] Make generator for extra testcases
--         [ ] Make generator for git push description.
+-           [x] Make generator for extra testcases
+-           [x] Make generator for git push description.
 
 ## Overview
 
