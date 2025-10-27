@@ -2,6 +2,11 @@
 
 Utility scripts for downloading LeetCode problem statements and scaffolding language-specific starter files.
 
+## TODO:
+
+-       Make generator for extra testcases
+-       Make generator for git push description.
+
 ## Overview
 
 -   Fetch problem metadata via LeetCode's GraphQL API
