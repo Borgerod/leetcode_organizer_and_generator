@@ -55,6 +55,20 @@ language-specific boilerplate solution files with runnable test harnesses.
 ```powershell
 pip install leetcrate
 ```
+#### NOTE: if you have installed Python through windows store, you need to do this extra step.
+- After installing leetcrate, add package to your env variables PATH.
+
+```powershell
+set PATH=%PATH%;C:\Users\YOUR_USER_NAME\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts
+```
+OR more generally (for those not using python 3.12)
+```powershell
+set PATH=%PATH%;%USERPROFILE%\AppData\Local\Packages\PythonSoftwareFoundation.Python.<PYTHON_VERSION>_qbz5n2kfra8p0\LocalCache\local-packages\Python<MAJOR><MINOR>\Scripts
+```
+
+_For some reason, Python is set up wrong when it is installed from windows store.
+Maybe theres a workaround for this, that I don't know about yet._
+
 
 <!-- ### From source (editable install)
 
