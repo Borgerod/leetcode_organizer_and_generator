@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
 REM Activate Python venv
 call .venv\Scripts\activate
@@ -15,15 +15,15 @@ if "%2"=="patch" (
     bumpver update --patch --allow-dirty
     git add -u
     python devops-scripts\generate_commit.py
+    del /q dist\* 2>nul
+    python -m build
     call :confirm_push || ( call :rollback & goto :eof )
     git push --follow-tags
     if "%3"=="--release" (
-        for /f %%V in ('bumpver show current-version --no-fetch') do set VERSION=%%V
-        gh release create v%VERSION% --title "v%VERSION%" --notes "Automated release"
-            REM Upload to PyPI
-            for /f %%K in ("keys\pypi.txt") do set PYPI_TOKEN=%%K
-            python -m pip install --upgrade twine
-            twine upload dist/* -u __token__ -p %PYPI_TOKEN%
+        for /f %%V in ('bumpver show --current-version --no-fetch') do set VERSION=%%V
+        gh release create v!VERSION! --title "v!VERSION!" --notes "Automated release"
+        set /p PYPI_TOKEN=<keys\pypi.txt
+        twine upload dist/* -u __token__ -p !PYPI_TOKEN!
     )
     goto :eof
 )
@@ -31,17 +31,15 @@ if "%2"=="minor" (
     bumpver update --minor --allow-dirty
     git add -u
     python devops-scripts\generate_commit.py
-    python -m pip install --upgrade build
+    del /q dist\* 2>nul
     python -m build
     call :confirm_push || ( call :rollback & goto :eof )
     git push --follow-tags
     if "%3"=="--release" (
-        for /f %%V in ('bumpver show current-version --no-fetch') do set VERSION=%%V
-        gh release create v%VERSION% --title "v%VERSION%" --notes "Automated release"
-            REM Upload to PyPI
-            for /f %%K in ("keys\pypi.txt") do set PYPI_TOKEN=%%K
-            python -m pip install --upgrade twine
-            twine upload dist/* -u __token__ -p %PYPI_TOKEN%
+        for /f %%V in ('bumpver show --current-version --no-fetch') do set VERSION=%%V
+        gh release create v!VERSION! --title "v!VERSION!" --notes "Automated release"
+        set /p PYPI_TOKEN=<keys\pypi.txt
+        twine upload dist/* -u __token__ -p !PYPI_TOKEN!
     )
     goto :eof
 )
@@ -49,17 +47,15 @@ if "%2"=="major" (
     bumpver update --major --allow-dirty
     git add -u
     python devops-scripts\generate_commit.py
-    python -m pip install --upgrade build
+    del /q dist\* 2>nul
     python -m build
     call :confirm_push || ( call :rollback & goto :eof )
     git push --follow-tags
     if "%3"=="--release" (
-        for /f %%V in ('bumpver show current-version --no-fetch') do set VERSION=%%V
-        gh release create v%VERSION% --title "v%VERSION%" --notes "Automated release"
-            REM Upload to PyPI
-            for /f %%K in ("keys\pypi.txt") do set PYPI_TOKEN=%%K
-            python -m pip install --upgrade twine
-            twine upload dist/* -u __token__ -p %PYPI_TOKEN%
+        for /f %%V in ('bumpver show --current-version --no-fetch') do set VERSION=%%V
+        gh release create v!VERSION! --title "v!VERSION!" --notes "Automated release"
+        set /p PYPI_TOKEN=<keys\pypi.txt
+        twine upload dist/* -u __token__ -p !PYPI_TOKEN!
     )
     goto :eof
 )
