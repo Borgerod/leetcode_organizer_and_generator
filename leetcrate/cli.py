@@ -109,6 +109,7 @@ def main() -> None:
 
     generate_parser = subparsers.add_parser(
         'generate',
+        aliases=['gen', 'get', 'create'],
         help='Generate a problem template from a LeetCode slug or URL',
     )
     generate_parser.add_argument('slug', nargs='?', help='LeetCode problem slug or URL')
